@@ -1,0 +1,36 @@
+{
+  "name": "puhelinluettelo",
+  "version": "0.0.1",
+  "description": "Full stack web development, backend for phonebook application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "build:ui": "rm -rf build && cd ../../../ot-harjoitustyo/osa2/puhelinluettelo && npm run build --prod && cp -r build ../../../ot-harjoitustyo_backend/osa3/puhelinluettelo_ja_tietokanta/",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
+    "logs:prod": "heroku logs --tail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jariharti/ot-harjoitustyo_backend.git"
+  },
+  "author": "Jari Hartikainen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jariharti/ot-harjoitustyo_backend/issues"
+  },
+  "homepage": "https://github.com/jariharti/ot-harjoitustyo_backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.0",
+    "logger": "0.0.1",
+    "mongoose": "^5.5.11",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
