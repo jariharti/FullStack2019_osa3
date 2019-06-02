@@ -5,28 +5,28 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const express = require('express')
+import express, { static } from 'express';
 const app = express()
-const bodyParser = require('body-parser')
-var morgan = require('morgan')
-const cors = require('cors')
-const Person = require('./models/person')
+import { json } from 'body-parser';
+import morgan, { token } from 'morgan';
+import cors from 'cors';
+import Person, { find, findByIdAndRemove, findById, findByIdAndUpdate } from './models/person';
 
 const logger = (request, response, next) => {
   next()
 }
 //Express tarkastaa GET-tyyppisten HTTP-pyyntöjen yhteydessä ensin löytyykö pyynnön polkua vastaavan nimistä tiedostoa hakemistosta build //
 //Jos löytyy, palauttaa express tiedoston //
-app.use(express.static('build'))
+app.use(static('build'))
 
 // Koska palvelin on localhostin portissa 3001 ja frontend localhostin portissa 3000, niiden origin ei ole sama //
 // Voimme sallia muista origineista tulevat pyynnöt käyttämällä Noden cors-middlewarea. //
 app.use(cors())
-app.use(bodyParser.json())
+app.use(json())
 app.use(logger)
 
 // custom token to log req string to console
-morgan.token('req_string', function getReqString (req) {
+token('req_string', function getReqString (req) {
   return JSON.stringify(req.body)
 })
 
@@ -44,7 +44,7 @@ app.use(morgan(function (tokens, req, res) {
 
 // get phonebook data from Mongo database in collections "persons", when user enters to ./ web-page //
 app.get('/', (request, response, next) => {
-  Person.find({}).then(list=> {
+  find({}).then(list => {
     response.json(list.map(person => person.toJSON()))
   })
     .catch(error => next(error))
@@ -52,7 +52,7 @@ app.get('/', (request, response, next) => {
 
 // get phonebook data from Mongo database in collections "persons", when user enters to ./api/persons web-page //
 app.get('/api/persons', (request, response, next) => {
-  Person.find({}).then(list => {
+  find({}).then(list => {
     response.json(list.map(person => person.toJSON()))
   })
     .catch(error => next(error))
@@ -82,9 +82,9 @@ app.post('/api/persons', (request,response, next) => {
 
 // User wants to delete person from the phonebook
 app.delete('/api/persons/:id', (request, response, next) => {
-  Person.findByIdAndRemove(request.params.id)
+  findByIdAndRemove(request.params.id)
     .then(result => {
-      if (result==null) {
+      if (result===null) {
         response.status(400).json({ error: 'Data already removed' }).end()
       }
       else {
@@ -98,12 +98,12 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 // User wants to list one person information from the phonebook
 app.get('/api/persons/:id', (request, response, next) => {
-  Person.findById(request.params.id)
+  findById(request.params.id)
     .then(person => {
       if (person) {
         response.json(person.toJSON())
       } else {
-        response.status(404).end() 
+        response.status(404).end()
       }
     })
     .catch(error => {
@@ -112,14 +112,14 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 })
 
-// User wants to update persons' phone number only 
+// User wants to update persons' phone number only
 app.put('/api/persons/:id', (request, response, next) => {
 
   const newNumber = {
     number: request.body.number,
   }
 
-  Person.findByIdAndUpdate(request.params.id, newNumber)
+  findByIdAndUpdate(request.params.id, newNumber)
     .then(updatedPerson => {
       response.json(updatedPerson.toJSON())
     })
@@ -130,7 +130,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 // User moved to ./info web-page, and see a spefic return message
 app.get('/api/info', (request, response, next) => {
 
-  Person.find({}).then (
+  find({}).then (
     results => {
       var collectionElements = results.map(count => count.id).length
       response.send(`<p>&nbsp;Puhelinluettelossa ${collectionElements} henkilön tiedot<br> <br>&nbsp; ${Date()}</p>`)
@@ -144,7 +144,7 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
-  } 
+  }
   if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   }
