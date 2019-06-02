@@ -8,7 +8,7 @@
     "start": "node index.js",
     "watch": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../../../ot-harjoitustyo/osa2/puhelinluettelo && npm run build --prod && cp -r build ../../../ot-harjoitustyo_backend/osa3/puhelinluettelo_ja_tietokanta/",
-    "deploy": "git push heroku master",
+    "deploy": "cd ../.. && git subtree push --prefix osa3/puhelinluettelo_ja_tietokanta heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
