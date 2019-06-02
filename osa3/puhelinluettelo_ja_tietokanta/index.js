@@ -78,7 +78,10 @@ app.post('/api/persons', (request,response, next) => {
         console.log("savedPerson....",savedPerson)
         response.json(savedPerson.toJSON())
       })
-      .catch(error => next(error))
+      .catch(error => {
+        console.log("error in savedPerson....",error)
+        next(error)
+      })
   }
 })
 
