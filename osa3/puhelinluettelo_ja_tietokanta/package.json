@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "build:ui": "rm -rf build && cd ../../../ot-harjoitustyo/osa2/puhelinluettelo && npm run build --prod && cp -r build ../../../ot-harjoitustyo_backend/osa3/puhelinluettelo_ja_tietokanta/",
-    "gitconfig": "cd ../.. && git add . && git commit -m uibuild && && git subtree push --prefix osa3/puhelinluettelo_ja_tietokanta heroku master",
+    "buildfrontend": "rm -rf build && cd ../../../ot-harjoitustyo/osa2/puhelinluettelo && npm run build --prod && cp -r build ../../../ot-harjoitustyo_backend/osa3/puhelinluettelo_ja_tietokanta/",
+    "gitconfig": "cd ../.. && git add . && git commit -m \"by script\"",
+    "herokuall": "npm run buildfrontend && npm run gitconfig",
     "logs:prod": "heroku logs --tail"
   },
   "repository": {
@@ -27,6 +28,7 @@
     "express": "^4.17.0",
     "logger": "0.0.1",
     "mongoose": "^5.5.11",
+    "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
