@@ -9,7 +9,8 @@
     "watch": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../../../ot-harjoitustyo/osa2/puhelinluettelo && npm run build --prod && cp -r build ../../../ot-harjoitustyo_backend/osa3/puhelinluettelo_ja_tietokanta/",
     "deploy:heroku": "cd ../.. && git add . && git commit -m \"by script\" && git subtree push --prefix osa3/puhelinluettelo_ja_tietokanta heroku master",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
     "nodemon": "^1.19.0"
   }
 }
