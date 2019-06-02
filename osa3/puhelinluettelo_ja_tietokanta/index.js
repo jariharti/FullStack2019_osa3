@@ -5,7 +5,7 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-import express, { static } from 'express';
+const express = require('express')
 const app = express()
 import { json } from 'body-parser';
 import morgan, { token } from 'morgan';
@@ -17,7 +17,8 @@ const logger = (request, response, next) => {
 }
 //Express tarkastaa GET-tyyppisten HTTP-pyyntöjen yhteydessä ensin löytyykö pyynnön polkua vastaavan nimistä tiedostoa hakemistosta build //
 //Jos löytyy, palauttaa express tiedoston //
-app.use(static('build'))
+app.use(express.static('build'))
+
 
 // Koska palvelin on localhostin portissa 3001 ja frontend localhostin portissa 3000, niiden origin ei ole sama //
 // Voimme sallia muista origineista tulevat pyynnöt käyttämällä Noden cors-middlewarea. //
