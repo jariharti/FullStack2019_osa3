@@ -1,5 +1,5 @@
 /* Jari Hartikainen, 30.5.2019 */
-/* Aalto University, Course: Full Stack Web Development, Part 3: puhelinluettelo ja tietokanta step1 ... step7*/
+/* Aalto University, Course: Full Stack Web Development, Part 3: puhelinluettelo ja tietokanta 3.1 ... 3.22*/
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
