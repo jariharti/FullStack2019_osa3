@@ -1,7 +1,9 @@
 /* Jari Hartikainen, 30.5.2019 */
-/* Aalto University, Course: Full Stack Web Development, Part 3: puhelinluettelo ja tietokanta step1 ... step5*/
+/* Aalto University, Course: Full Stack Web Development, Part 3: puhelinluettelo ja tietokanta step1 ... step7*/
 
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
